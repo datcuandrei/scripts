@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# public playlists only
+# retrieve website data with wget, search how songs are listed in playlist
+# create file with playlist name and get the tracklist inside
+
+echo "AAPLDL"
+wget -O /tmp/playlist.html $1
+
+header_index=$(cat /tmp/playlist.html | grep -n "h1 id=" | cut -b -3)
+let "index=$header_index+1"
+plname=$(cat /tmp/playlist.html | head -$index | tail +$index | cut -b 17- | tr " " _)
+
+cat /tmp/playlist.html | grep -e "song-name" | cut -b 133- | sed 's.</div>..g' | sed 's.amp;..g' > $plname
+
+echo "Tracklist for "$plname" playlist:"
+echo "-------------------------------"
+
+cat $plname 
+echo "----------------"
+echo "No. of items: $(cat $plname | wc -l)"
+
+echo ""
+echo "The tracklist was also saved under $(pwd)/$plname"
+
+rm /tmp/playlist.html

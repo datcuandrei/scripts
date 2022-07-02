@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
-# public playlists only
-# retrieve website data with wget, search how songs are listed in playlist
-# create file with playlist name and get the tracklist inside
+# aapldl
+# a script that retrives the tracklist from a provided 
+# Apple Music playlist and saves it as a file
 
 echo "AAPLDL"
 wget -O /tmp/playlist.html $1
